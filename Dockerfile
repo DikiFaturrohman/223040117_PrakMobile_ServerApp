@@ -19,7 +19,7 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Instal semua dependensi proyek Laravel (sekarang seharusnya berhasil)
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader && php artisan migrate --force
 
 # Ubah kepemilikan file agar bisa ditulis oleh server Apache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
