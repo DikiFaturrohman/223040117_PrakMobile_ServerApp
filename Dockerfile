@@ -22,7 +22,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader && php artisan migrate --force
 
 # Ubah kepemilikan file agar bisa ditulis oleh server Apache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Pindahkan file konfigurasi Apache yang sudah kita siapkan
 COPY ./.docker/vhost.conf /etc/apache2/sites-available/000-default.conf
